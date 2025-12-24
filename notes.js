@@ -37,3 +37,18 @@ app.get('/notes/:id', (req, res) => {
     res.json(note);
 });
 
+// DELETE a note by id
+app.delete('/notes/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const noteIndex = notes.findIndex(n => n.id === id);
+    
+    if (noteIndex === -1) {
+        return res.status(404).json({ error: 'Note not found' });
+    }
+    
+    // Remove the note from the array
+    const deletedNote = notes.splice(noteIndex, 1);
+    res.json(deletedNote[0]);
+});
+
+
