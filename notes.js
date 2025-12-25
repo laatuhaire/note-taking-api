@@ -69,8 +69,11 @@ app.put('/notes/:id', (req, res) => {
     res.status(200).json(note);
 });
 
-
-
+//Error Handling 
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: "Something went wrong" });
+});
 
 // Start the server
 app.listen(port, () => {
