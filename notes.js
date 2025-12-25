@@ -11,6 +11,11 @@ app.use(express.json());
 let notes = [];
 let currentId = 1;
 
+// Root route (health)
+app.get("/", (req, res) => {
+  res.send("Notes API is running");
+});
+
 // CREATE a new note
 app.post('/notes', (req, res) => {
     const { title, content } = req.body;
@@ -59,10 +64,14 @@ app.put('/notes/:id', (req, res) => {
         return res.status(404).json({ message: "Note not found" });
     }
     const { title, content } = req.body;
-    note.title = title;
-    note.content = content;
+    if (title !== undefined) note.title = title;
+    if (content !== undefined) note.content = content;
     res.status(200).json(note);
 });
+
+
+
+
 // Start the server
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
