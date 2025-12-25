@@ -51,7 +51,7 @@ app.delete('/notes/:id', (req, res) => {
     res.json(deletedNote[0]);
 });
 // UPDATE a note by id
-app.patch('/notes/:id', (req, res) => {
+app.put('/notes/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const note = notes.find((n) => n.id === id);
 
@@ -59,8 +59,8 @@ app.patch('/notes/:id', (req, res) => {
         return res.status(404).json({ message: "Note not found" });
     }
     const { title, content } = req.body;
-    if (title !== undefined) note.title = title;
-    if (content !== undefined) note.content = content;
+    note.title = title;
+    note.content = content;
     res.status(200).json(note);
 });
 // Start the server
