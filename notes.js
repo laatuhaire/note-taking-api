@@ -50,5 +50,20 @@ app.delete('/notes/:id', (req, res) => {
     const deletedNote = notes.splice(noteIndex, 1);
     res.json(deletedNote[0]);
 });
+// UPDATE a note by id
+app.patch('/notes/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const note = notes.find((n) => n.id === id);
 
-
+    if (!note) {
+        return res.status(404).json({ message: "Note not found" });
+    }
+    const { title, content } = req.body;
+    if (title !== undefined) note.title = title;
+    if (content !== undefined) note.content = content;
+    res.status(200).json(note);
+});
+// Start the server
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
